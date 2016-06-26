@@ -1,0 +1,3 @@
+# https://romanrm.net/dd-benchmark
+
+dd if=/dev/zero bs=1M count=256 | md5sum
