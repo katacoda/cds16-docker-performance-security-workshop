@@ -1,5 +1,27 @@
 # Try on Katacoda at https://www.katacoda.com/courses/docker-performance/disk-io
 
+# Comparing AUFS/DeviceMapper to Overlayfs
+
+# Katacoda is running Overlay. Change it back to running devicemapper by running following threee commands. 
+sed -i 's/overlay/devicemapper/' /etc/systemd/system/docker.service
+systemctl daemon-reload
+systemctl restart docker
+
+
+
+# Ensure your daemon is running via AUFS
+# Change storage driver "--storage-driver=overlay" at the Daemon Level
+# docker-machine ssh default
+# sudo su
+# cp /var/lib/boot2docker/profile /var/lib/boot2docker/profile.bak
+# echo "DOCKER_STORAGE=overlay" >> /var/lib/boot2docker/profile
+# sed -i 's/^\(DOCKER_STORAGE=\).*/\1overlay/' /var/lib/boot2docker/profile
+# sudo /etc/init.d/docker restart
+
+# NOTE: This will look like all your images have disappeared. They still exist.
+# Restore to AUFS via
+# sed -i 's/^\(DOCKER_STORAGE=\).*/\1aufs/' /var/lib/boot2docker/profile
+
 # docker build -f docker-images/io-perf/Dockerfile docker-images/io-perf
 # Ensure your daemon is running via AUFS
 # docker info
